@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer\CurrencyLayerCurrencyAdapter;
+use CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer\GetRateRequest;
 use CurrencX\Domain\ExchangeRate\Currency;
 use CurrencX\Domain\ExchangeRate\ExchangeRate;
 use CurrencX\Domain\ExchangeRate\ExchangeRateId;
@@ -43,19 +45,23 @@ class Wiring extends Command
     {
         $id = ExchangeRateId::generate();
 
-        $exchangeRate = ExchangeRate::create(
-            $id,
-            Currency::EUR(),
-            Currency::PLN(),
-            4.32
-        );
+        $currencyClient = new CurrencyLayerCurrencyAdapter();
+        $rate = $currencyClient->getRate('EUR', 'PLN');
 
-//        dump($exchangeRate);
-
-//        $this->exchangeRateRepository->save($exchangeRate);
-        /** @var ExchangeRateId $rateId */
-        $rateId = ExchangeRateId::fromString('fd687aa4-183f-11ea-bf7b-588a5a2101d4');
-        dump($this->exchangeRateRepository->find($rateId));
+        dump($rate);
+//        $exchangeRate = ExchangeRate::create(
+//            $id,
+//            Currency::EUR(),
+//            Currency::PLN(),
+//            4.32
+//        );
+//
+////        dump($exchangeRate);
+//
+////        $this->exchangeRateRepository->save($exchangeRate);
+//        /** @var ExchangeRateId $rateId */
+//        $rateId = ExchangeRateId::fromString('fd687aa4-183f-11ea-bf7b-588a5a2101d4');
+//        dump($this->exchangeRateRepository->find($rateId));
 
         return 1;
     }
