@@ -17,10 +17,6 @@ use Webmozart\Assert\Assert;
 
 class EloquentMessageRepository implements MessageRepository
 {
-    /**
-     * @var Connection
-     */
-    private Connection $connection;
 
     private string $tableName;
 
@@ -100,6 +96,7 @@ class EloquentMessageRepository implements MessageRepository
         $rows = DB::table($this->tableName)
             ->select('payload')
             ->from($this->tableName)
+            ->where('aggregate_root_id', '=', $id->toString())
             ->orderBy('created_at', 'ASC')
             ->get()
             ->map(fn (\stdClass $row) => $this->serializer->unserializePayload(json_decode($row->payload, true)))

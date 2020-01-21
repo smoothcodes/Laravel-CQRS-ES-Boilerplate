@@ -44,7 +44,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "CurrencX\\": "src/"
+            "CurrencX\\": "src/Sample",
+            "Utils\\": "src/Utils"
         },
         "classmap": [
             "database/seeds",

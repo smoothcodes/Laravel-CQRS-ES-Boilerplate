@@ -49,17 +49,17 @@ class Wiring extends Command
         $rate = $currencyClient->getRate('EUR', 'PLN');
 
         dump($rate);
-//        $exchangeRate = ExchangeRate::create(
-//            $id,
-//            Currency::EUR(),
-//            Currency::PLN(),
-//            4.32
-//        );
+        $exchangeRate = ExchangeRate::create(
+            $id,
+            Currency::EUR(),
+            Currency::PLN(),
+            $rate
+        );
 //
 ////        dump($exchangeRate);
 //
-////        $this->exchangeRateRepository->save($exchangeRate);
-//        /** @var ExchangeRateId $rateId */
+        $this->exchangeRateRepository->save($exchangeRate);
+        /** @var ExchangeRateId $rateId */
 //        $rateId = ExchangeRateId::fromString('fd687aa4-183f-11ea-bf7b-588a5a2101d4');
 //        dump($this->exchangeRateRepository->find($rateId));
 
