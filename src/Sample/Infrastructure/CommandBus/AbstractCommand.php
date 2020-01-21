@@ -9,53 +9,77 @@ use Utils\Immutable\Immutable;
  * Class AbstractCommand
  * @package CurrencX\Infrastructure\CommandBus
  *
- * @TODO: Handle fromPayload && toPayload methods with reflection
+ * @TODO: Handle toPayload method with reflection
+ * @TODO: Check if fromPayload method works
  */
 abstract class AbstractCommand implements Command
 {
     use Immutable;
 
-    /**
-     * @var array
-     */
-    protected array $payload = [];
+    protected static array $requiredFields = [
 
-    private function __construct(array $payload = [])
-    {
-        $this->payload = $payload;
-    }
+    ];
 
     public static function fromPayload(array $payload): Command
     {
-        return new static($payload);
-    }
-
-    public function with(string $key, $value = null): Command
-    {
-        return new static(array_merge($this->payload, [
-            $key => $value,
-        ]));
-    }
-
-    public function without(string $key): Command
-    {
-        $payload = $this->payload;
-        unset($payload[$key]);
-
-        return new static($payload);
-    }
-
-    public function get(string $key, $defaultValue = null)
-    {
-        if (!array_key_exists($key, $this->payload)) {
-            return $defaultValue;
+        if (!self::validatePayaload($payload)){
+            /** @TODO: create custom exception class */
+            throw new \Exception('Invalid payload');
         }
 
-        return $this->payload[$key];
+        $command = new static();
+        $reflection = new \ReflectionClass($command);
+        foreach ($reflection->getProperties() as $property) {
+            if (!$property->isPublic()) {
+                $property->setAccessible(true);
+            }
+
+            if (!array_key_exists($property->getName(), $payload)) {
+                throw new \InvalidArgumentException(sprintf('Key [%s] do not exists in payload', $property->getName()));
+            }
+
+            $property->setValue($command, $payload[$property->getName()]);
+        }
+
+        return $command;
     }
 
-    public function toPayload(): array
+    protected static function validatePayaload($payload): bool
     {
-        return $this->payload;
+        return !(count(array_diff(self::$requiredFields, array_keys($payload))) > 0);
     }
+
+//    public static function fromPayload(array $payload): Command
+//    {
+//        return new static($payload);
+//    }
+//
+//    public function with(string $key, $value = null): Command
+//    {
+//        return new static(array_merge($this->payload, [
+//            $key => $value,
+//        ]));
+//    }
+//
+//    public function without(string $key): Command
+//    {
+//        $payload = $this->payload;
+//        unset($payload[$key]);
+//
+//        return new static($payload);
+//    }
+//
+//    public function get(string $key, $defaultValue = null)
+//    {
+//        if (!array_key_exists($key, $this->payload)) {
+//            return $defaultValue;
+//        }
+//
+//        return $this->payload[$key];
+//    }
+//
+//    public function toPayload(): array
+//    {
+//        return $this->payload;
+//    }
 }
