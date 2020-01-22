@@ -45,7 +45,8 @@
         "psr-4": {
             "App\\": "app/",
             "CurrencX\\": "src/Sample",
-            "Utils\\": "src/Utils"
+            "Utils\\": "src/Utils",
+            "SmoothCode\\Propagation\\": "src/Propagation"
         },
         "classmap": [
             "database/seeds",

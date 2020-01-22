@@ -8,6 +8,7 @@ use CurrencX\Domain\ExchangeRate\Currency;
 use CurrencX\Domain\ExchangeRate\ExchangeRate;
 use CurrencX\Domain\ExchangeRate\ExchangeRateId;
 use CurrencX\Domain\ExchangeRate\ExchangeRateRepository;
+use CurrencX\Infrastructure\CommandBus\AbstractCommand;
 use Illuminate\Console\Command;
 
 class Wiring extends Command
@@ -43,23 +44,38 @@ class Wiring extends Command
      */
     public function handle()
     {
-        $id = ExchangeRateId::generate();
 
-        $currencyClient = new CurrencyLayerCurrencyAdapter();
-        $rate = $currencyClient->getRate('EUR', 'PLN');
+        $command = new class extends AbstractCommand {
+            protected static array $requiredFields = [
+                'name',
+                'age'
+            ];
 
-        dump($rate);
-        $exchangeRate = ExchangeRate::create(
-            $id,
-            Currency::EUR(),
-            Currency::PLN(),
-            $rate
-        );
+            public string $name;
+
+            public int $age;
+        };
+
+        $test = $command::fromPayload(['name' => 'Jan', 'age' => 12]);
+        dump($test);
+
+//        $id = ExchangeRateId::generate();
+//
+//        $currencyClient = new CurrencyLayerCurrencyAdapter();
+//        $rate = $currencyClient->getRate('EUR', 'PLN');
+//
+//        dump($rate);
+//        $exchangeRate = ExchangeRate::create(
+//            $id,
+//            Currency::EUR(),
+//            Currency::PLN(),
+//            $rate
+//        );
 //
 ////        dump($exchangeRate);
 //
-        $this->exchangeRateRepository->save($exchangeRate);
-        /** @var ExchangeRateId $rateId */
+//        $this->exchangeRateRepository->save($exchangeRate);
+//        /** @var ExchangeRateId $rateId */
 //        $rateId = ExchangeRateId::fromString('fd687aa4-183f-11ea-bf7b-588a5a2101d4');
 //        dump($this->exchangeRateRepository->find($rateId));
 

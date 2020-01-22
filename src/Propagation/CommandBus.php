@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CurrencX\Infrastructure\CommandBus;
+namespace SmoothCode\Propagation;
 
 
 interface CommandBus
