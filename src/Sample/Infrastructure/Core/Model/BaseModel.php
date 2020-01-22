@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CurrencX\Infrastructure\Core\Model;
+namespace SmoothCode\Sample\Infrastructure\Core\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;

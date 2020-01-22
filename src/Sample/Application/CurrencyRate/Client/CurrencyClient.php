@@ -1,6 +1,6 @@
 <?php
 
-namespace CurrencX\Application\CurrencyRate\Client;
+namespace SmoothCode\Sample\Application\CurrencyRate\Client;
 
 use Money\Money;
 

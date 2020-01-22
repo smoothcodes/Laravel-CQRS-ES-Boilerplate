@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer;
-
-use Psr\Http\Message\RequestInterface;
+namespace SmoothCode\Sample\Application\CurrencyRate\Adapter\CurrencyLayer;
 
 abstract class Request
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer;
+namespace SmoothCode\Sample\Application\CurrencyRate\Adapter\CurrencyLayer;
 
-use CurrencX\Application\CurrencyRate\Client\CurrencyClient;
+use SmoothCode\Sample\Application\CurrencyRate\Client\CurrencyClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Symfony\Component\PropertyAccess\PropertyAccessor;

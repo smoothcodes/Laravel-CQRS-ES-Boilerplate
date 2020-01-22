@@ -8,16 +8,16 @@ use Utils\Immutable\Immutable;
 
 /**
  * Class AbstractCommand
- * @package CurrencX\Infrastructure\CommandBus
+ * @package SmoothCode\Sample\Infrastructure\CommandBus
  *
  * @TODO: Handle toPayload method with reflection
  * @TODO: Check if fromPayload method works
  */
 abstract class AbstractCommand implements Command
 {
-    protected static array $requiredFields = [
+    protected static array $requiredFields = [];
 
-    ];
+    protected static array $allowedFields = [];
 
     /**
      * @param array $payload
@@ -26,11 +26,7 @@ abstract class AbstractCommand implements Command
      */
     public static function fromPayload(array $payload): Command
     {
-        if (!self::validatePayaload($payload)) {
-            /** @TODO: create custom exception class */
-            throw new \Exception('Invalid payload');
-        }
-
+        $payload = self::validatePayaload($payload);
         $command    = new static();
         $reflection = new \ReflectionClass($command);
         foreach ($reflection->getProperties() as $property) {
@@ -62,6 +58,10 @@ abstract class AbstractCommand implements Command
         $payload    = [];
         $reflection = new \ReflectionClass($this);
         foreach ($reflection->getProperties() as $property) {
+            if ($property->isStatic()) {
+                continue;
+            }
+
             if (!$property->isPublic()) {
                 $property->setAccessible(true);
             }
@@ -72,8 +72,18 @@ abstract class AbstractCommand implements Command
         return $payload;
     }
 
-    protected static function validatePayaload($payload): bool
+    protected static function validatePayaload($payload): array
     {
-        return !(count(array_diff(static::$requiredFields, array_keys($payload))) > 0);
+        $payloadKeys = array_keys($payload);
+        if(count($missingFields = array_diff(static::$requiredFields, $payloadKeys)) > 0) {
+            throw InvalidPayloadException::requiredFieldsNotSatisfied(...$missingFields);
+        }
+
+        $keysToRemove = array_diff($payloadKeys, static::$requiredFields + static::$allowedFields);
+        foreach ($keysToRemove as $key) {
+            unset($payload[$key]);
+        }
+
+        return $payload;
     }
 }

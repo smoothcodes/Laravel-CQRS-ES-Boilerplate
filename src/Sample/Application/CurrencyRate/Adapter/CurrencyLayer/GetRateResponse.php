@@ -1,6 +1,6 @@
 <?php
 
-namespace CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer;
+namespace SmoothCode\Sample\Application\CurrencyRate\Adapter\CurrencyLayer;
 
 class GetRateResponse {
     public ?bool $success;

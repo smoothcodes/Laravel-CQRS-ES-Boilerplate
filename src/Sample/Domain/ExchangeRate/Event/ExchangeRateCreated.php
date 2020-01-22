@@ -1,8 +1,8 @@
 <?php
 
-namespace CurrencX\Domain\ExchangeRate\Event;
+namespace SmoothCode\Sample\Domain\ExchangeRate\Event;
 
-use CurrencX\Domain\ExchangeRate\Currency;
+use SmoothCode\Sample\Domain\ExchangeRate\Currency;
 use EventSauce\EventSourcing\Serialization\SerializablePayload;
 
 class ExchangeRateCreated implements SerializablePayload {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CurrencX\Infrastructure\EventSourcing;
+namespace SmoothCode\Sample\Infrastructure\EventSourcing;
 
 
 use Doctrine\DBAL\Connection;
@@ -10,10 +10,8 @@ use EventSauce\EventSourcing\Message;
 use EventSauce\EventSourcing\MessageRepository;
 use EventSauce\EventSourcing\Serialization\MessageSerializer;
 use Generator;
-use EventSauce\EventSourcing;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
-use Webmozart\Assert\Assert;
 
 class EloquentMessageRepository implements MessageRepository
 {

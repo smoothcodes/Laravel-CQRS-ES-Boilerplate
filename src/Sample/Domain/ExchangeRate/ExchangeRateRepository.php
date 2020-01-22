@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CurrencX\Domain\ExchangeRate;
+namespace SmoothCode\Sample\Domain\ExchangeRate;
 
 interface ExchangeRateRepository
 {

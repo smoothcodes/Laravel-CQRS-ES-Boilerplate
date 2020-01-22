@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands;
 
-use CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer\CurrencyLayerCurrencyAdapter;
-use CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer\GetRateRequest;
-use CurrencX\Domain\ExchangeRate\Currency;
-use CurrencX\Domain\ExchangeRate\ExchangeRate;
-use CurrencX\Domain\ExchangeRate\ExchangeRateId;
-use CurrencX\Domain\ExchangeRate\ExchangeRateRepository;
-use CurrencX\Infrastructure\CommandBus\AbstractCommand;
+use SmoothCode\Propagation\AbstractCommand;
+use SmoothCode\Propagation\CommandBus;
+use SmoothCode\Sample\Domain\Command\ImportExchangeRate;
+use SmoothCode\Sample\Domain\ExchangeRate\Currency;
+use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateRepository;
 use Illuminate\Console\Command;
 
 class Wiring extends Command
@@ -21,19 +19,19 @@ class Wiring extends Command
     protected $signature = 'wiring';
 
     /**
-     * @var ExchangeRateRepository
+     * @var CommandBus
      */
-    protected ExchangeRateRepository $exchangeRateRepository;
+    private CommandBus $commandBus;
 
     /**
      * Create a new command instance.
      *
-     * @param ExchangeRateRepository $exchangeRateRepository
+     * @param CommandBus $commandBus
      */
-    public function __construct(ExchangeRateRepository $exchangeRateRepository)
+    public function __construct(CommandBus $commandBus)
     {
         parent::__construct();
-        $this->exchangeRateRepository = $exchangeRateRepository;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -44,20 +42,26 @@ class Wiring extends Command
      */
     public function handle()
     {
-
-        $command = new class extends AbstractCommand {
-            protected static array $requiredFields = [
-                'name',
-                'age'
-            ];
-
-            public string $name;
-
-            public int $age;
-        };
-
-        $test = $command::fromPayload(['name' => 'Jan', 'age' => 12]);
-        dump($test);
+        $this->commandBus->dispatch(
+            ImportExchangeRate::fromPayload([
+                ImportExchangeRate::SOURCE_CURRENCY => Currency::EUR(),
+                ImportExchangeRate::TARGET_CURRENCY => Currency::PLN(),
+                ImportExchangeRate::RATE => 4.29
+            ])
+        );
+//        $command = new class extends AbstractCommand {
+//            protected static array $requiredFields = [
+//                'name',
+//                'age'
+//            ];
+//
+//            public string $name;
+//
+//            public int $age;
+//        };
+//
+//        $test = $command::fromPayload(['name' => 'Jan', 'age' => 12]);
+//        dump($test);
 
 //        $id = ExchangeRateId::generate();
 //

@@ -178,8 +178,13 @@ return [
         /*
          * CQRS
          */
-        App\Providers\CQRSServiceProvider::class,
+        App\Providers\EventSourceServiceProvider::class,
 
+        /*
+         * CommandBus
+         */
+        App\Providers\CommandBusProvider::class,
+        App\Providers\TacticianProvider::class
     ],
 
     /*

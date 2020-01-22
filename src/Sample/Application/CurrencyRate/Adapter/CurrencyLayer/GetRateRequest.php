@@ -2,6 +2,9 @@
 
 namespace CurrencX\Application\CurrencyRate\Adapter\CurrencyLayer;
 
+use SmoothCode\Sample\Application\CurrencyRate\Adapter\CurrencyLayer\GetRateResponse;
+use SmoothCode\Sample\Application\CurrencyRate\Adapter\CurrencyLayer\Request;
+
 class GetRateRequest extends Request
 {
     public function __construct(

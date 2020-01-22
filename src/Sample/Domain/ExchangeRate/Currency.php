@@ -1,12 +1,12 @@
 <?php
 
-namespace CurrencX\Domain\ExchangeRate;
+namespace SmoothCode\Sample\Domain\ExchangeRate;
 
 use MyCLabs\Enum\Enum;
 
 /**
  * Class Currency
- * @package CurrencX\Domain\ExchangeRate
+ * @package SmoothCode\Sample\Domain\ExchangeRate
  *
  * @method static Currency PLN()
  * @method static Currency EUR()

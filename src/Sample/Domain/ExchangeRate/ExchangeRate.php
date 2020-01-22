@@ -1,8 +1,8 @@
 <?php
 
-namespace CurrencX\Domain\ExchangeRate;
+namespace SmoothCode\Sample\Domain\ExchangeRate;
 
-use CurrencX\Domain\ExchangeRate\Event\ExchangeRateCreated;
+use SmoothCode\Sample\Domain\ExchangeRate\Event\ExchangeRateCreated;
 use EventSauce\EventSourcing\AggregateRoot;
 use EventSauce\EventSourcing\AggregateRootBehaviour;
 use Webmozart\Assert\Assert;
