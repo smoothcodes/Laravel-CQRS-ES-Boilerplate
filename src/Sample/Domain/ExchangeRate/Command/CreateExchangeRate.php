@@ -1,12 +1,11 @@
 <?php
 
-namespace SmoothCode\Sample\Domain\Command;
+namespace SmoothCode\Sample\Domain\ExchangeRate\Command;
 
 use SmoothCode\Propagation\AbstractCommand;
-use SmoothCode\Propagation\Command;
 use SmoothCode\Sample\Domain\ExchangeRate\Currency;
 
-class ImportExchangeRate extends AbstractCommand {
+class CreateExchangeRate extends AbstractCommand {
 
     const SOURCE_CURRENCY = 'sourceCurrency';
     const TARGET_CURRENCY = 'targetCurrency';

@@ -2,18 +2,18 @@
 
 namespace SmoothCode\Sample\Infrastructure\ExchangeRate;
 
-use SmoothCode\Sample\Domain\ExchangeRate\EchoWhenImported;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRate;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateId;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateRepository;
 use EventSauce\EventSourcing\AggregateRootRepository;
+use SmoothCode\Sample\Domain\ExchangeRate\Policy\ExchangeRateProjection;
 use SmoothCode\Sample\Infrastructure\EventSourcing\AggregateRootRepositoryFactory;
 
 class EventSauceExchangeRateRepository implements ExchangeRateRepository
 {
     /** @var string[] */
     protected array $consumers = [
-        EchoWhenImported::class
+        ExchangeRateProjection::class
     ];
 
     protected array $eventConsumers = [

@@ -28,6 +28,7 @@ class ExchangeRate implements AggregateRoot
         $exchangeRate = new static($exchangeRateId);
         $exchangeRate->recordThat(
             new ExchangeRateCreated(
+                $exchangeRateId,
                 $sourceCurrency,
                 $targetCurrency,
                 $rate

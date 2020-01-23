@@ -1,6 +1,6 @@
 <?php
 
-namespace SmoothCode\Sample\Domain\ExchangeRate;
+namespace SmoothCode\Sample\Domain\ExchangeRate\Policy;
 
 use EventSauce\EventSourcing\Consumer;
 use EventSauce\EventSourcing\Message;

@@ -1,13 +1,13 @@
 <?php
 
-namespace SmoothCode\Sample\Domain\Handler;
+namespace SmoothCode\Sample\Domain\ExchangeRate\Handler;
 
-use SmoothCode\Sample\Domain\Command\ImportExchangeRate;
+use SmoothCode\Sample\Domain\ExchangeRate\Command\CreateExchangeRate;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRate;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateId;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateRepository;
 
-class ImportExchangeRateHandler {
+class CreateExchangeRateHandler {
 
     private ExchangeRateRepository $exchangeRateRepository;
 
@@ -16,7 +16,7 @@ class ImportExchangeRateHandler {
         $this->exchangeRateRepository = $exchangeRateRepository;
     }
 
-    public function __invoke(ImportExchangeRate $command): void
+    public function __invoke(CreateExchangeRate $command): void
     {
         $exchangeRate = ExchangeRate::create(
             ExchangeRateId::generate(),

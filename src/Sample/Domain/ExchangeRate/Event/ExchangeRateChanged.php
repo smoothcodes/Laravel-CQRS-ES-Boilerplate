@@ -2,14 +2,10 @@
 
 namespace SmoothCode\Sample\Domain\ExchangeRate\Event;
 
-use Ramsey\Uuid\Uuid;
 use SmoothCode\Sample\Domain\ExchangeRate\Currency;
 use EventSauce\EventSourcing\Serialization\SerializablePayload;
-use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateId;
 
-class ExchangeRateCreated implements SerializablePayload {
-
-    private ExchangeRateId $exchangeRateId;
+class ExchangeRateChanged implements SerializablePayload {
 
     private Currency $sourceCurrency;
 
@@ -19,25 +15,15 @@ class ExchangeRateCreated implements SerializablePayload {
 
     /**
      * ExchangeRateCreated constructor.
-     * @param ExchangeRateId $exchangeRateId
      * @param Currency $sourceCurrency
      * @param Currency $targetCurrency
      * @param float $rate
      */
-    public function __construct(ExchangeRateId $exchangeRateId, Currency $sourceCurrency, Currency $targetCurrency, float $rate)
+    public function __construct(Currency $sourceCurrency, Currency $targetCurrency, float $rate)
     {
-        $this->exchangeRateId = $exchangeRateId;
         $this->sourceCurrency = $sourceCurrency;
         $this->targetCurrency = $targetCurrency;
         $this->rate           = $rate;
-    }
-
-    /**
-     * @return ExchangeRateId
-     */
-    public function getId(): ExchangeRateId
-    {
-        return $this->exchangeRateId;
     }
 
     /**
@@ -46,6 +32,14 @@ class ExchangeRateCreated implements SerializablePayload {
     public function getSourceCurrency(): Currency
     {
         return $this->sourceCurrency;
+    }
+
+    /**
+     * @param Currency $sourceCurrency
+     */
+    public function setSourceCurrency(Currency $sourceCurrency): void
+    {
+        $this->sourceCurrency = $sourceCurrency;
     }
 
     /**
@@ -80,9 +74,6 @@ class ExchangeRateCreated implements SerializablePayload {
         $this->rate = $rate;
     }
 
-    /**
-     * @return array
-     */
     public function toPayload(): array
     {
         return [
@@ -92,15 +83,9 @@ class ExchangeRateCreated implements SerializablePayload {
         ];
     }
 
-    /**
-     * @param array $payload
-     * @return SerializablePayload
-     * @throws \Exception
-     */
     public static function fromPayload(array $payload): SerializablePayload
     {
         return new self(
-            ExchangeRateId::generate(),
             new Currency($payload['sourceCurrency']),
             new Currency($payload['targetCurrency']),
             $payload['rate']

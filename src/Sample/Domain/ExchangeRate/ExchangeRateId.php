@@ -48,4 +48,8 @@ class ExchangeRateId implements AggregateRootId
         return new self((string)Uuid::uuid1());
     }
 
+    public function __toString()
+    {
+        return $this->uuid;
+    }
 }

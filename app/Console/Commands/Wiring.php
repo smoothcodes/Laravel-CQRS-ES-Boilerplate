@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use SmoothCode\Propagation\AbstractCommand;
 use SmoothCode\Propagation\CommandBus;
-use SmoothCode\Sample\Domain\Command\ImportExchangeRate;
+use SmoothCode\Sample\Domain\ExchangeRate\Command\CreateExchangeRate;
 use SmoothCode\Sample\Domain\ExchangeRate\Currency;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateRepository;
 use Illuminate\Console\Command;
@@ -43,10 +43,10 @@ class Wiring extends Command
     public function handle()
     {
         $this->commandBus->dispatch(
-            ImportExchangeRate::fromPayload([
-                ImportExchangeRate::SOURCE_CURRENCY => Currency::EUR(),
-                ImportExchangeRate::TARGET_CURRENCY => Currency::PLN(),
-                ImportExchangeRate::RATE => 4.29
+            CreateExchangeRate::fromPayload([
+                                                CreateExchangeRate::SOURCE_CURRENCY => Currency::EUR(),
+                                                CreateExchangeRate::TARGET_CURRENCY => Currency::PLN(),
+                                                CreateExchangeRate::RATE            => 4.29
             ])
         );
 //        $command = new class extends AbstractCommand {
