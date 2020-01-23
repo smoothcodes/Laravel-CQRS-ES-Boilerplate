@@ -18,7 +18,6 @@ class TacticianCommandBus implements CommandBus
     public function dispatch(Command $command): void
     {
         $this->commandBus->handle($command);
-//        $command $command::fromPayload()
     }
 
 }

@@ -10,8 +10,6 @@ use Utils\Immutable\Immutable;
  * Class AbstractCommand
  * @package SmoothCode\Sample\Infrastructure\CommandBus
  *
- * @TODO: Handle toPayload method with reflection
- * @TODO: Check if fromPayload method works
  */
 abstract class AbstractCommand implements Command
 {
@@ -26,7 +24,7 @@ abstract class AbstractCommand implements Command
      */
     public static function fromPayload(array $payload): Command
     {
-        $payload = self::validatePayaload($payload);
+        $payload    = self::validatePayaload($payload);
         $command    = new static();
         $reflection = new \ReflectionClass($command);
         foreach ($reflection->getProperties() as $property) {
@@ -38,8 +36,12 @@ abstract class AbstractCommand implements Command
                 $property->setAccessible(true);
             }
 
-            if (!array_key_exists($property->getName(), $payload)) {
+            if (!array_key_exists($property->getName(), $payload) && in_array($property->getName(), static::$requiredFields)) {
                 throw new \InvalidArgumentException(sprintf('Key [%s] do not exists in payload', $property->getName()));
+            }
+
+            if (in_array($property->getName(), static::$allowedFields) && !isset($payload[$property->getName()])) {
+                continue;
             }
 
 
@@ -75,7 +77,7 @@ abstract class AbstractCommand implements Command
     protected static function validatePayaload($payload): array
     {
         $payloadKeys = array_keys($payload);
-        if(count($missingFields = array_diff(static::$requiredFields, $payloadKeys)) > 0) {
+        if (count($missingFields = array_diff(static::$requiredFields, $payloadKeys)) > 0) {
             throw InvalidPayloadException::requiredFieldsNotSatisfied(...$missingFields);
         }
 

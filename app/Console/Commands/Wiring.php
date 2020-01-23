@@ -5,9 +5,12 @@ namespace App\Console\Commands;
 use SmoothCode\Propagation\AbstractCommand;
 use SmoothCode\Propagation\CommandBus;
 use SmoothCode\Sample\Domain\ExchangeRate\Command\CreateExchangeRate;
+use SmoothCode\Sample\Domain\Tutor\Command\CreateTutor;
 use SmoothCode\Sample\Domain\ExchangeRate\Currency;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateRepository;
 use Illuminate\Console\Command;
+use SmoothCode\Sample\Shared\ValueObjects\Email;
+use SmoothCode\Sample\Shared\ValueObjects\Password;
 
 class Wiring extends Command
 {
@@ -42,13 +45,22 @@ class Wiring extends Command
      */
     public function handle()
     {
+//        $this->commandBus->dispatch(
+//            CreateExchangeRate::fromPayload(
+//                [
+//                    CreateExchangeRate::SOURCE_CURRENCY => Currency::EUR(),
+//                    CreateExchangeRate::TARGET_CURRENCY => Currency::PLN(),
+//                    CreateExchangeRate::RATE            => 4.29
+//                ])
+//        );
+
         $this->commandBus->dispatch(
-            CreateExchangeRate::fromPayload([
-                                                CreateExchangeRate::SOURCE_CURRENCY => Currency::EUR(),
-                                                CreateExchangeRate::TARGET_CURRENCY => Currency::PLN(),
-                                                CreateExchangeRate::RATE            => 4.29
-            ])
-        );
+            CreateTutor::fromPayload(
+                [
+                    CreateTutor::EMAIL    => new Email('rusinowicz9@gmail.com'),
+                    CreateTutor::PASSWORD => new Password('ce11c6dede')
+                ])
+    );
 //        $command = new class extends AbstractCommand {
 //            protected static array $requiredFields = [
 //                'name',

@@ -3,6 +3,7 @@
 namespace SmoothCode\Sample\Domain\ExchangeRate\Policy;
 
 use App\Model\Sample\ExchangeRate;
+use SmoothCode\Sample\Domain\ExchangeRate\Event\ExchangeRateChanged;
 use SmoothCode\Sample\Domain\ExchangeRate\Event\ExchangeRateCreated;
 use SmoothCode\Sample\Infrastructure\Projection\Projectionist;
 

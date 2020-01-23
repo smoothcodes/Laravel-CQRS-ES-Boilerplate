@@ -7,7 +7,8 @@ use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRate;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateId;
 use SmoothCode\Sample\Domain\ExchangeRate\ExchangeRateRepository;
 
-class CreateExchangeRateHandler {
+class CreateExchangeRateHandler
+{
 
     private ExchangeRateRepository $exchangeRateRepository;
 
